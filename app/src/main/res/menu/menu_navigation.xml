@@ -6,7 +6,11 @@
         android:id="@+id/newQuotationFragment"
         android:icon="@drawable/baseline_fiber_new_24"/>
     <item android:title="Item"
-        android:id="@+id/aboutDialogFragment"
+        android:id="@+id/favouritesFragment"
+        android:icon="@drawable/baseline_favorite_24"
         />
-    <item android:title="Item" />
+    <item android:title="Item"
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/baseline_settings_applications_24"
+        />
 </menu>
