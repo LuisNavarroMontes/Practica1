@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/newQuotationFragment">
+
+    <fragment
+        android:id="@+id/newQuotationFragment"
+        android:name="com.lnavmon.practica1.iu.newquotation.NewQuotationFragment"
+        android:label="Get a new quotation" >
+        <action
+            android:id="@+id/action_newQuotationFragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_newQuotationFragment_to_aboutDialogFragment"
+            app:destination="@id/aboutDialogFragment" />
+        <action
+            android:id="@+id/action_newQuotationFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/aboutDialogFragment"
+        android:name="com.lnavmon.practica1.iu.abort.AboutDialogFragment"
+        android:label="Abort" />
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="com.lnavmon.practica1.iu.favourites.FavouritesFragment"
+        android:label="Favourite quotations" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.lnavmon.practica1.iu.settings.SettingsFragment"
+        android:label="Settings" />
+</navigation>
