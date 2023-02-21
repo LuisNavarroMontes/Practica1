@@ -40,7 +40,17 @@ class MainActivity : AppCompatActivity(), MenuProvider {
         binding.bottomNavigationView as NavigationBarView
         val navController = binding.fragmentContainerView.getFragment<NavHostFragment>().navController
         navController.navigate(R.id.aboutDialogFragment)
-        return true
+        if(menuItem.itemId == R.id.aboutDialogFragment){
+            return true
+        }else if(menuItem.itemId == R.id.favouritesFragment){
+            return true
+        }else if(menuItem.itemId == R.id.settingsFragment){
+            return true
+        }else if(menuItem.itemId == R.id.newQuotationFragment){
+            return true
+        }else{
+            return false
+        }
     }
 
 }
