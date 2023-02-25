@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeToRefresh"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,32 +9,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/btnFlotante"
+            android:layout_width="179dp"
+            android:layout_height="172dp"
+            android:layout_gravity="bottom|end"
+            android:src = "@drawable/baseline_add_to_photos_24"
             >
+
         </com.google.android.material.floatingactionbutton.FloatingActionButton>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvGreetings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:justificationMode="inter_word"
+                android:textStyle="italic"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:id= "@+id/tvAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:justificationMode="inter_word"
+                android:textStyle="italic"/>
 
-            >
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvQuotation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:justificationMode="inter_word"
+                android:textStyle="italic"
+                tools:layout_editor_absoluteX="73dp"
+                tools:layout_editor_absoluteY="91dp">
 
             </com.google.android.material.textview.MaterialTextView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/get_a_new_quotation"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
