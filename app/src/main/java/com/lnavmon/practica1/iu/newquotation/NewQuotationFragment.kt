@@ -40,6 +40,10 @@ class NewQuotationFragment : Fragment(R.layout.fragment_new_quotation) {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     private fun getNewQuotation(){
         viewModel.getNewQuotation()
     }

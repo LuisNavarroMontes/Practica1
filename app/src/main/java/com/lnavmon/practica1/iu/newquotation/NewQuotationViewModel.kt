@@ -1,16 +1,20 @@
 package com.lnavmon.practica1.iu.newquotation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.lnavmon.practica1.data.newquotation.NewQuotationRepository
 import com.lnavmon.practica1.iu.domain.model.Quotation
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewQuotationViewModel @Inject constructor(
     private val newQuotationRepository: NewQuotationRepository) : ViewModel() {
 
+    private val _error = MutableLiveData<Throwable?>()
+    val error: LiveData<Throwable?> = _error
+
+    fun resetError() {
+        _error.value = null
+    }
 
     private val _userName = MutableLiveData<String>().apply {
         value = getUserName()
@@ -47,9 +51,16 @@ class NewQuotationViewModel @Inject constructor(
 
     fun getNewQuotation() {
         _isRefreshing.value = true
-        val num = (0..99).random().toString()
-        val newQuotation = Quotation(num, "Quotation text #$num", "Author #$num")
-        _quotation.value = newQuotation
+        viewModelScope.launch {
+            newQuotationRepository.getNewQuotation().fold(
+                onSuccess = { quotation ->
+                    _quotation.value = quotation
+                },
+                onFailure = { throwable ->
+                    _error.value = throwable
+                }
+            )
+        }
         _isRefreshing.value = false
         _isFabVisible.value = true
     }
