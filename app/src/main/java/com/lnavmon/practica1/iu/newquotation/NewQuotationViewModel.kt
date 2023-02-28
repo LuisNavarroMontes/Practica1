@@ -4,9 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.lnavmon.practica1.data.newquotation.NewQuotationRepository
 import com.lnavmon.practica1.iu.domain.model.Quotation
+import javax.inject.Inject
 
-class NewQuotationViewModel : ViewModel(){
+class NewQuotationViewModel @Inject constructor(
+    private val newQuotationRepository: NewQuotationRepository) : ViewModel() {
+
+
     private val _userName = MutableLiveData<String>().apply {
         value = getUserName()
     }
