@@ -1,10 +1,15 @@
 package com.lnavmon.practica1.iu.newquotation
 
+import android.accounts.NetworkErrorException
+import android.media.MediaPlayer.ProvisioningServerErrorException
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.lnavmon.practica1.R
+import com.lnavmon.practica1.data.utils.NoInternetException
 import com.lnavmon.practica1.databinding.FragmentNewQuotationBinding
 
 class NewQuotationFragment : Fragment(R.layout.fragment_new_quotation) {
@@ -42,6 +47,19 @@ class NewQuotationFragment : Fragment(R.layout.fragment_new_quotation) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.error.observe(this, Observer { error ->
+            if (error != null) {
+                val errorMessage = when(error) {
+                    is NetworkErrorException -> R.string.network_error_message
+                    is NoInternetException -> R.string.no_internet_error_message
+                    is ProvisioningServerErrorException -> R.string.server_error_message
+                    else -> R.string.unexpected_error_message
+                }
+                view?.let { Snackbar.make(it, errorMessage, Snackbar.LENGTH_LONG).show() }
+                viewModel.resetError()
+            }
+        })
+
     }
 
     private fun getNewQuotation(){

@@ -1,13 +1,19 @@
 package com.lnavmon.practica1.iu.newquotation
 
 import androidx.lifecycle.*
+import com.lnavmon.practica1.data.favourites.FavouritesRepository
+import com.lnavmon.practica1.data.newquotation.NewQuotationManager
 import com.lnavmon.practica1.data.newquotation.NewQuotationRepository
+import com.lnavmon.practica1.data.settings.SettingsRepository
 import com.lnavmon.practica1.iu.domain.model.Quotation
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NewQuotationViewModel @Inject constructor(
-    private val newQuotationRepository: NewQuotationRepository) : ViewModel() {
+    private val newQuotationManager: NewQuotationManager,
+    private val settingsRepository: SettingsRepository,
+    private val favouritesRepository: FavouritesRepository
+) : ViewModel() {
 
     private val _error = MutableLiveData<Throwable?>()
     val error: LiveData<Throwable?> = _error
@@ -16,15 +22,7 @@ class NewQuotationViewModel @Inject constructor(
         _error.value = null
     }
 
-    private val _userName = MutableLiveData<String>().apply {
-        value = getUserName()
-    }
-
-    private fun getUserName(): String {
-        return setOf("Alice", "Bob", "Charlie", "David", "Emma").random()
-    }
-    val userName: LiveData<String>
-        get() = _userName
+    val userName: LiveData<String> = settingsRepository.getUsername().asLiveData()
 
     private val _quotation = MutableLiveData<Quotation>()
     val quotation: LiveData<Quotation>
@@ -34,13 +32,14 @@ class NewQuotationViewModel @Inject constructor(
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    val isGreetingsVisible = Transformations.map(quotation) { it == null }
+    val isGreetingsVisible = quotation.map() {  it.identificador.isEmpty() }
 
     private val _isRefreshing = MutableLiveData<Boolean>().apply {
         value = false
     }
     val isRefreshing: LiveData<Boolean>
         get() = _isRefreshing
+
     // Propiedad privada que almacena la visibilidad del botón flotante
     private val _isFabVisible = MutableLiveData(false)
 
@@ -48,11 +47,10 @@ class NewQuotationViewModel @Inject constructor(
     val isFabVisible: LiveData<Boolean>
         get() = _isFabVisible
 
-
     fun getNewQuotation() {
         _isRefreshing.value = true
         viewModelScope.launch {
-            newQuotationRepository.getNewQuotation().fold(
+            newQuotationManager.getNewQuotation().fold(
                 onSuccess = { quotation ->
                     _quotation.value = quotation
                 },
@@ -60,12 +58,20 @@ class NewQuotationViewModel @Inject constructor(
                     _error.value = throwable
                 }
             )
+            _isRefreshing.value = false
+            _isFabVisible.value = true
         }
-        _isRefreshing.value = false
-        _isFabVisible.value = true
     }
 
     fun addToFavorites(){
-        _isFabVisible.value = false
+        viewModelScope.launch {
+            try {
+                favouritesRepository.addFavourite(quotation.value!!)
+                _isFabVisible.value = false
+            } catch (e: Exception) {
+                _error.value = e
+            }
+        }
     }
+
 }

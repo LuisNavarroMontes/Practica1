@@ -7,4 +7,10 @@
     <string name="practica1_by_luis_developed_for_dadm_2023">Practica1 del desarrollador Luis para DADM</string>
     <string name="es_una_foto_de_perfil">es una foto de perfil</string>
     <string name="delete_all_quotations">Eliminar todas las citas</string>
+    <string name="network_error_message">network error</string>
+    <string name="server_error_message">server error</string>
+    <string name="unexpected_error_message">unexpected error</string>
+    <string name="no_internet_error_message">No internet error</string>
+    <string name="ingles">ingles</string>
+    <string name="espanol">espanol</string>
 </resources>

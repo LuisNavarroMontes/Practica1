@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="nombreUsuario"
+        android:title="Introduce tu nombre de usuario"
+        android:defaultValue="Valor por defecto"
+        android:hint="Introduce tu nombre"
+        />
+    <!--app:useSimpleSummaryProvider="true"
+    -->
+        />
+
+    <ListPreference
+        android:key="idiomaCitas"
+        android:title="Selecciona tu idioma"
+        android:entries="@array/idiomas"
+        android:entryValues="@array/codigos"
+        android:defaultValue="en"/>
+        <!--app:useSimpleSummaryProvider="true"-->
+    />
+
+
+</PreferenceScreen>
