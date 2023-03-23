@@ -8,6 +8,7 @@ import com.lnavmon.practica1.data.settings.SettingsRepository
 import com.lnavmon.practica1.iu.domain.model.Quotation
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 class NewQuotationViewModel @Inject constructor(
     private val newQuotationManager: NewQuotationManager,
@@ -40,34 +41,42 @@ class NewQuotationViewModel @Inject constructor(
     val isRefreshing: LiveData<Boolean>
         get() = _isRefreshing
 
-    // Propiedad privada que almacena la visibilidad del botón flotante
-    private val _isFabVisible = MutableLiveData(false)
-
-    // Propiedad pública que se expone como LiveData para observar cambios en la visibilidad del botón flotante
-    val isFabVisible: LiveData<Boolean>
-        get() = _isFabVisible
+    val isAddToFavouritesVisible = quotation.switchMap() { newQuotation ->
+        favouritesRepository.getFavouriteById(newQuotation.identificador.toLong()).asLiveData()
+    }.map() { favourite ->
+        favourite == null
+    }
 
     fun getNewQuotation() {
         _isRefreshing.value = true
         viewModelScope.launch {
-            newQuotationManager.getNewQuotation().fold(
-                onSuccess = { quotation ->
-                    _quotation.value = quotation
-                },
-                onFailure = { throwable ->
-                    _error.value = throwable
-                }
-            )
+            val random = Random.nextInt(2)
+            if (random == 0) {
+                newQuotationManager.getNewQuotation().fold(
+                    onSuccess = { quotation ->
+                        _quotation.value = quotation
+                    },
+                    onFailure = { throwable ->
+                        _error.value = throwable
+                    }
+                )
+            } else {
+                val manualQuotation = Quotation(
+                    identificador = "manualQuotation",
+                    nombre = "Esta es una cita creada manualmente",
+                    autor = "Yo mismo"
+                )
+                _quotation.value = manualQuotation
+            }
             _isRefreshing.value = false
-            _isFabVisible.value = true
         }
     }
+
 
     fun addToFavorites(){
         viewModelScope.launch {
             try {
                 favouritesRepository.addFavourite(quotation.value!!)
-                _isFabVisible.value = false
             } catch (e: Exception) {
                 _error.value = e
             }

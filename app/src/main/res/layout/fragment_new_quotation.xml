@@ -15,6 +15,7 @@
             android:layout_width="179dp"
             android:layout_height="172dp"
             android:layout_gravity="bottom|end"
+            android:visibility="invisible"
             android:src = "@drawable/baseline_add_to_photos_24"
             >
 
