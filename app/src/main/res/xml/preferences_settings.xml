@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <EditTextPreference
         android:key="nombreUsuario"
         android:title="Introduce tu nombre de usuario"
         android:defaultValue="Valor por defecto"
         android:hint="Introduce tu nombre"
-        />
-    <!--app:useSimpleSummaryProvider="true"
-    -->
+        app:useSimpleSummaryProvider="true"
+
         />
 
     <ListPreference
@@ -15,8 +15,8 @@
         android:title="Selecciona tu idioma"
         android:entries="@array/idiomas"
         android:entryValues="@array/codigos"
-        android:defaultValue="en"/>
-        <!--app:useSimpleSummaryProvider="true"-->
+        android:defaultValue="en"
+        app:useSimpleSummaryProvider="true"
     />
 
 

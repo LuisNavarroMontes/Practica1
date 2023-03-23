@@ -2,16 +2,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="idiomas">
         <item>@string/ingles</item>
-        <item>@string/espanol</item>
+        <item>@string/ruso</item>
     </string-array>
 
-    <string name="ingles">english</string>
-    <string name="espanol">spanish</string>
 
     <string-array name="codigos">
         <item>en</item>
-        <item>es</item>
+        <item>ru</item>
     </string-array>
 
 
+    <string name="ruso">stringRuso</string>
 </resources>
