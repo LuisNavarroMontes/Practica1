@@ -37,7 +37,7 @@ class NewQuotationFragment : Fragment(R.layout.fragment_new_quotation) {
             binding.tvAuthor.text = if (author.isEmpty()) "Anonymous" else author
         }
 
-        viewModel.isFabVisible.observe(viewLifecycleOwner) { isVisible ->
+        viewModel.isAddToFavouritesVisible.observe(viewLifecycleOwner) { isVisible ->
             binding.btnFlotante.visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
         }
         binding.btnFlotante.setOnClickListener {

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class FavouritesViewModel(private val favouritesRepository: FavouritesRepository, private val binding: QuotationItemBinding) : ViewModel() {
 
-    val isDeleteAllVisible = favouritesRepository.getAllFavourites().map{ it.isNotEmpty() }
+    val isDeleteAllVisible = favouritesRepository.getAllFavourites().asLiveData().map{ it.isNotEmpty() }
 
     fun bind(quotation: Quotation) {
         binding.tvAutorCitaFav.text = quotation.autor
@@ -31,7 +31,6 @@ class FavouritesViewModel(private val favouritesRepository: FavouritesRepository
         viewModelScope.launch {
             try {
                 favouritesRepository.deleteAllFavourites()
-                favoriteQuotations.value = emptyList()
             } catch (e: Exception) {
                 _error.value = e
             }
